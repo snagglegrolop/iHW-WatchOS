@@ -140,9 +140,11 @@ struct MiddleSchoolSchedule: View {
                                         
                                         
                                         if xmlinfo.MScounter == 0 && !xmlinfo.SchoolDidEndVar {
-                                            PeriodUntilTextFinished(xmlinfo: xmlinfo)
+                                            PeriodUntilTextFinished(xmlinfo: xmlinfo, onScreen: true)
+
                                         } else if xmlinfo.MScounter == 0 {
-                                            PeriodUntilTextFinished(xmlinfo: xmlinfo)
+                                            PeriodUntilTextFinished(xmlinfo: xmlinfo, onScreen: true)
+
                                         }
                                         
                                         

@@ -29,7 +29,12 @@ struct GrowingButton2: ButtonStyle {
 
 
 class XMLInfo: ObservableObject {
-    @Published var DayDateLong = "Having trouble connecting to internet"
+    @Published var DayDateLong = "Having trouble connecting to internet" {
+        didSet {
+            self.wifienable = false
+        }
+    }
+    @Published var wifienable = true
     @Published var CycleDay = "2"
     @Published var DivisionDescription = "MS"
     @Published var SchoolDayDescription = "MS Day 2"
@@ -83,7 +88,7 @@ class XMLInfo: ObservableObject {
     @Published var SchoolDidEndVar = false
     @Published var DayOfWeek = "Tuesday"
     @AppStorage("lastRequestTime") var lastRequestTime: Double = 0
-
+    @Published var CanMS_Nav = false
     
     
     func MSgetInfo(futuredays: Int) {
@@ -190,17 +195,18 @@ class XMLInfo: ObservableObject {
     
     @Published var isHoliday = false
     // TU means Time Until
-    @Published var FirstTUFiveMNotif: Double = -10.0
-    @Published var BreakTUFiveMNotif: Double = -10.0
-    @Published var SecondTUFiveMNotif: Double = -10.0
-    @Published var ThirdTUFiveMNotif: Double = -10.0
-    @Published var FourthTUFiveMNotif: Double = -10.0
-    @Published var FifthTUFiveMNotif: Double = -10.0
-    @Published var SixthTUFiveMNotif: Double = -10.0
-    @Published var SeventhTUFiveMNotif: Double = -10.0
-    @Published var EigthTUFiveMNotif: Double = -10.0
-    @Published var NinthTUFiveMNotif: Double = -10.0
-    
+    @Published var FirstTUFiveMNotif: Double = -20.0
+    @Published var BreakTUFiveMNotif: Double = -19.0
+    @Published var SecondTUFiveMNotif: Double = -18.0
+    @Published var ThirdTUFiveMNotif: Double = -17.0
+    @Published var FourthTUFiveMNotif: Double = -16.0
+    @Published var FifthTUFiveMNotif: Double = -15.0
+    @Published var SixthTUFiveMNotif: Double = -14.0
+    @Published var SeventhTUFiveMNotif: Double = -13.0
+    @Published var EigthTUFiveMNotif: Double = -12.0
+    @Published var NinthTUFiveMNotif: Double = -11.0 
+        
+    @Published var Popup_PoppedUp = false
     func tabLoad() {
         if self.isHoliday == true {
             self.selectedTab = "Holiday"
@@ -224,79 +230,149 @@ struct USMSSelect: View {
     
     var body: some View {
         if #available(watchOS 9.0, *) {
-            VStack(spacing: 10){
-                Text(" ")
-                    .font(.system(size: 10))
-                Button {
-                    UpperNav = true
+            NavigationStack {
+                ZStack {
+                    PeriodUntilTextFinished(xmlinfo: xmlinfo, onScreen: false)
+                    Rectangle()
+                        .fill(Color.black)
+
+                        .frame(width: SGConvenience.deviceWidth, height: SGConvenience.deviceWidth)
+                    VStack(spacing: 10){
+                        Text(" ")
+                            .font(.system(size: 10))
+                        Button {
+                            if xmlinfo.CanMS_Nav {
+                                UpperNav = true
+                            }
+                        } label: {
+                            Text("  Upper School Schedule  ")
+                                .multilineTextAlignment(.center)
+                            
+                                .foregroundColor(.white)
+                                .font(.system(size: 26, weight: .bold))
+                            
+                            
+                        }
+                        .buttonStyle(ButtonLook)
+                        
+                        if xmlinfo.Popup_PoppedUp{
+                            Spacer()
+                                .frame(height: SGConvenience.deviceWidth / 2)
+                            
+                                Text("Notifications have been set for today.")
+                                .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.center)
+                                .font(.system(size: CGFloat(15), weight: .semibold))
+                                .foregroundColor(.red)
+                                .transition(.moveAndScale)
+                                
+                                Text("Remember not to rely on notifications as they may come late.")
+                                .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.center)
+                                .font(.footnote)
+                                .transition(.moveAndScale)
+                                .onAppear {
+                                        WKInterfaceDevice.current().play(.notification)
+                                    }
+                            
+                            
+                            Spacer()
+                                .frame(height: SGConvenience.deviceWidth / 2)
+
+                        }
+                        
+                        Button {
+                            if xmlinfo.CanMS_Nav {
+                                xmlinfo.MSgetInfo(futuredays: 0)
+                                xmlinfo.tabLoad()
+                                MiddleNav = true
+                            }
+                            
+                        } label: {
+                            
+                            Text("Middle School Schedule")
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.white)
+                                .font(.system(size: 25.5, weight: .bold))
+                            
+                            
+                        }
+                        .buttonStyle(ButtonLook)
+                        
+                    }
                     
-                } label: {
-                    Text("  Upper School Schedule  ")
-                        .multilineTextAlignment(.center)
+                    .navigationDestination(isPresented: $MiddleNav) {
+                        MiddleSchoolSchedule(xmlinfo: xmlinfo)
+                        
+                    }
                     
-                        .foregroundColor(.white)
-                        .font(.system(size: 26, weight: .bold))
-                    
-                    
+
                 }
-                .buttonStyle(ButtonLook)
-                
-                Button {
-                    xmlinfo.MSgetInfo(futuredays: 0)
-                    xmlinfo.tabLoad()
-                    MiddleNav = true
-                    
-                } label: {
-                    
-                    Text("Middle School Schedule")
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.white)
-                        .font(.system(size: 25.5, weight: .bold))
-                    
-                    
-                }
-                .buttonStyle(ButtonLook)
             }
         } else {
             
             NavigationView {
-                VStack(spacing: 10){
-                    
-                    
+                ZStack {
+                    PeriodUntilTextFinished(xmlinfo: xmlinfo, onScreen: false)
+                        .zIndex(0)
+                    Rectangle()
+                        .fill(Color.black)
+                        .zIndex(1)
+                    VStack(spacing: 10){
+                        
+                        
                         NavigationLink("Upper School Schedule",
-                           destination: UpperSchoolSchedule()
+                                       destination: UpperSchoolSchedule(),
+                                       isActive: $xmlinfo.CanMS_Nav
                         )
+                        
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
+                        
+                        
+                        
+                        
+                        
+                        .buttonStyle(ButtonLook)
+                        if xmlinfo.Popup_PoppedUp{
+                            Spacer()
+                                .frame(height: SGConvenience.deviceWidth / 2)
                             
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.white)
-                            .onTapGesture {
-                                xmlinfo.MSgetInfo(futuredays: 0)
-                                xmlinfo.tabLoad()
-                            }
+                                Text("Notifications have been set for today.")
+                                .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.center)
+                                .font(.system(size: CGFloat(15), weight: .semibold))
+                                .foregroundColor(.red)
+                                .transition(.moveAndScale)
+                                Text("Remember not to rely on notifications as they may come late.")
+                                .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.center)
+                                .font(.footnote)
+                                .transition(.moveAndScale)
+                                .onAppear {
+                                        WKInterfaceDevice.current().play(.notification)
+                                    }
                             
-                        
-                        
-                    
-                    .buttonStyle(ButtonLook)
-                    
-                    
-                        
+                            
+                            Spacer()
+                                .frame(height: SGConvenience.deviceWidth / 2)
+
+                        }
                         NavigationLink(
                             "Middle School Schedule",
-                            destination: MSSView()
+                            destination: MSSView(),
+                            isActive: $xmlinfo.CanMS_Nav
                         )
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.white)
-                            .onTapGesture {
-                                xmlinfo.MSgetInfo(futuredays: 0)
-                                xmlinfo.tabLoad()
-                                
-                            }
-                            
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
                         
                         
-                    
-                    .buttonStyle(ButtonLook)
+                        
+                        
+                        
+                        .buttonStyle(ButtonLook)
+                    }
+                    .zIndex(2)
                 }
                 
             }
@@ -307,6 +383,12 @@ struct USMSSelect: View {
     
 }
 
+extension AnyTransition {
+    static var moveAndScale: AnyTransition {
+        AnyTransition.move(edge: .bottom).combined(with: .scale)
+    }
+}
+                                            
 struct Schedule_Previews: PreviewProvider {
     static var previews: some View {
         USMSSelect()

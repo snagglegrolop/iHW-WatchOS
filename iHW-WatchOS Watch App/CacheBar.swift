@@ -23,109 +23,36 @@ enum SGConvenience{
 }
 
 
-struct SideMenu: View {
-    @Binding var isSidebarVisible: Bool
-    var sideBarWidth = SGConvenience.deviceWidth * 0.6
-    var menuColor: Color = Color(.init(red: 196 / 255, green: 2 / 255, blue: 51 / 255, alpha: 1))
-    
-    var body: some View {
-        ZStack {
-            GeometryReader { _ in
-                EmptyView()
-                
-            }
-            .background(.black.opacity(0.6))
-            .opacity(isSidebarVisible ? 1 : 0)
-            .animation(.easeInOut.delay(0.2), value: isSidebarVisible)
-            .onTapGesture {
-                isSidebarVisible.toggle()
-            }
-            content
-            
-        }
-        .edgesIgnoringSafeArea(.all)
-    }
-    
-    var content: some View {
-        HStack(alignment: .top) {
-            ZStack(alignment: .top) {
-                menuColor
-                MenuChevron
-                .padding(.top, 80)
-                .padding(.horizontal, 40)
-                
-                
-                VStack {
-                    Button {
-                        URLCache.shared.removeAllCachedResponses()
-                    } label: {
-                        Text("Reset The Cache")
-                        
-                    }
-                    .padding(.top, 400.0)
-                    Text("Click only if the app is showing incorrect information. If the issue persists, let a dev know.")
-                        .font(.system(size: 15, weight: .semibold))
-                        .padding(.top, 100)
+struct MyView: View {
+    @State var count = 0
+    @State var repeats = false
+    @State var activity = false {
+        didSet {
+            if self.activity {
+                Timer.scheduledTimer(withTimeInterval: 0.1, repeats: repeats) { timer in
+                    count += 1
                 }
             }
-            
-            .frame(width: sideBarWidth)
-            .offset(x: isSidebarVisible ? 0 : -sideBarWidth)
-            .animation(.default, value: isSidebarVisible)
-            Spacer()
         }
     }
     
-    var MenuChevron: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 18)
-                .fill(menuColor)
-                .frame(width: 60, height: 60)
-                .rotationEffect(Angle(degrees: 45))
-                .offset(x: isSidebarVisible ? -18 : -10)
-                .onTapGesture {
-                    isSidebarVisible.toggle()
-                }
-            
-            Image(systemName: "chevron.right")
-                .foregroundColor(secondaryColor)
-                .rotationEffect(isSidebarVisible ? Angle(degrees: 180) : Angle(degrees: 0))
-                .offset(x: isSidebarVisible ? -4 : 8)
-                .foregroundColor(.blue)
-        }
-        .offset(x: sideBarWidth / 2, y: 80)
-        .animation(.default, value: isSidebarVisible)
-    }
-}
-
-
-
-
-
-
-
-struct ContentView: View {
-    let messages: [String]
-
     var body: some View {
-        List(messages, id: \.self) { message in
-            Text(message)
+        VStack {
+            List {
+                Toggle("repeats?", isOn: $repeats)
+                Toggle("active?", isOn: $activity)
+                
+                
+                Text("\(count)")
+            }
         }
-        .navigationTitle("Messages")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button("New") {}
-            }
-
-         
-            }
-        
     }
 }
+    
 
 
-struct Homepge_Previews: PreviewProvider {
-        static var previews: some View {
-            ContentView(messages: ["howdy"])
-        }
+struct MyView_Previews: PreviewProvider {
+    static var previews: some View {
+        MyView()
     }
+}

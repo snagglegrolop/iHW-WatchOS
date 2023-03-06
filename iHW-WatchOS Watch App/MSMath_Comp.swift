@@ -16,17 +16,20 @@ import UserNotifications
 
 struct PeriodUntilTextFinished: View {
     @ObservedObject var xmlinfo: XMLInfo
-    @State private var Finished = ""
+    @State var Finished = ""
     @State var Array = ["", "", ""]
     @State var ToDateArray = ""
+    @State var onScreen: Bool
     @State var customdate = Date()
-    @State private var TimeDif = ""
+    @State var TimeDif = ""
     @State var nextPeriod = ""
     @State var nextPeriodText = ""
     @State var SchoolWillEndVar = false
     @State var FiveMinColor: Color = .red
     @State var endingWeekday = ""
+    @State var GotNearestPeriod = false
     @AppStorage("lastSchedRequestTime") var lastSchedRequestTime: Double = 0
+    @State var Popup_PoppedUp = false
     var body: some View {
         VStack {
             Spacer().frame(height: 15)
@@ -34,23 +37,36 @@ struct PeriodUntilTextFinished: View {
                 .multilineTextAlignment(.center)
                 .font(.system(size: 15, weight: .bold))
                 .foregroundColor(FiveMinColor)
+            
         }.onAppear {
-            getNearestPeriod()
+            getNearestPeriod(repeats: onScreen)
             let date = Date()
             let dateformatter = DateFormatter()
             dateformatter.dateFormat = "yyyy/MM/dd"
             ToDateArray = dateformatter.string(from: date)
+            if !onScreen {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    MSMakeNotifs()
+                }
+            }
             
-            let currentTime = Date().timeIntervalSince1970
             
-            if lastSchedRequestTime == 0 || !Calendar.current.isDate(Date(timeIntervalSince1970: lastSchedRequestTime), inSameDayAs: Date()) {
-                print("IT IS A NEW DAY")
+        }
+    }
+    
+    func MSMakeNotifs() {
+        let currentTime = Date().timeIntervalSince1970
 
-                let TUFiveArray = [xmlinfo.FirstTUFiveMNotif, xmlinfo.SecondTUFiveMNotif, xmlinfo.BreakTUFiveMNotif, xmlinfo.ThirdTUFiveMNotif, xmlinfo.FourthTUFiveMNotif, xmlinfo.FifthTUFiveMNotif, xmlinfo.SixthTUFiveMNotif, xmlinfo.SeventhTUFiveMNotif, xmlinfo.EigthTUFiveMNotif, xmlinfo.NinthTUFiveMNotif]
-                
-                for TimeUntil in TUFiveArray {
-                    print(TimeUntil)
-                    if TimeUntil > 0.0 {
+            if lastSchedRequestTime == 0 || !Calendar.current.isDate(Date(timeIntervalSince1970: lastSchedRequestTime), inSameDayAs: Date()) {
+                print("IT IS A NEW DAY but for notifs")
+
+                if !onScreen {
+                    
+                    let TUFiveArray = [xmlinfo.FirstTUFiveMNotif, xmlinfo.SecondTUFiveMNotif, xmlinfo.BreakTUFiveMNotif, xmlinfo.ThirdTUFiveMNotif, xmlinfo.FourthTUFiveMNotif, xmlinfo.FifthTUFiveMNotif, xmlinfo.SixthTUFiveMNotif, xmlinfo.SeventhTUFiveMNotif, xmlinfo.EigthTUFiveMNotif, xmlinfo.NinthTUFiveMNotif]
+                    
+                    for TimeUntil in TUFiveArray {
+                        print(TimeUntil)
+                        
                         var nextperiodNotif = "Next Period"
                         if TUFiveArray[0] == TimeUntil {
                             nextperiodNotif = "Period 1"
@@ -78,37 +94,61 @@ struct PeriodUntilTextFinished: View {
                         
                         content.title = "Five minutes until next period!"
                         content.body = "\(nextperiodNotif) is in 5 minutes"
-                        
+                        print(nextperiodNotif)
                         content.sound = UNNotificationSound.default
                         
                         
-                       
+                        
                         
                         // show this notification five seconds from now
-                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeUntil, repeats: false)
-
-                        // choose a random identifier
-                        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                        
-                        // add our notification request
-                        UNUserNotificationCenter.current().add(request)
-                        
+                        if TimeUntil > 0.0 {
+                            let identifier = UUID().uuidString
+                            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeUntil, repeats: false)
+                            
+                            // choose a random identifier
+                            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+                            print(identifier)
+                            // add our notification request
+                            UNUserNotificationCenter.current().add(request) { (error) in
+                                if let error = error {
+                                    print("Error \(error.localizedDescription)")
+                                }else{
+                                    print("send!!")
+                                    if TUFiveArray[9] == TimeUntil {
+                                        withAnimation {
+                                            xmlinfo.Popup_PoppedUp = true
+                                        }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                                
+                                                    xmlinfo.Popup_PoppedUp = false
+                                                    xmlinfo.CanMS_Nav = true
+                                            
+                                        }
+                                    }
+                                        
+                                        
+                                }
+                            }
+                            
+                            lastSchedRequestTime = currentTime
+                        } else {
+                            
+                            print("not enough time, moving on")
+                        }
                         
                     }
-                    print("not enough time, moving on")
                 }
-                
-                lastSchedRequestTime = currentTime
-            } else {
-                print("no notifications have been triggered :(")
-            }
-            
+        }
+        else {
+            print("not sending notifs :(")
+            xmlinfo.CanMS_Nav = true
         }
     }
     
-    private func getNearestPeriod() {        
+    public func getNearestPeriod(repeats: Bool) {
         xmlinfo.MSgetInfo(futuredays: xmlinfo.MScounter)
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+        
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: repeats) { timer in
     
             if xmlinfo.DayDateLong == "Having trouble connecting to internet" {
                 xmlinfo.MSgetInfo(futuredays: xmlinfo.MScounter)
@@ -121,15 +161,26 @@ struct PeriodUntilTextFinished: View {
                 }
                 
                 xmlinfo.FirstTUFiveMNotif = timersArray[0] - 300.0
+                print(xmlinfo.FirstTUFiveMNotif)
                 xmlinfo.SecondTUFiveMNotif = timersArray[1] - 300.0
+                print(xmlinfo.SecondTUFiveMNotif)
                 xmlinfo.BreakTUFiveMNotif = timersArray[2]
+                print(xmlinfo.BreakTUFiveMNotif)
                 xmlinfo.ThirdTUFiveMNotif = timersArray[3] - 300.0
+                print(xmlinfo.ThirdTUFiveMNotif)
                 xmlinfo.FourthTUFiveMNotif = timersArray[4] - 300.0
+                print(xmlinfo.FourthTUFiveMNotif)
                 xmlinfo.FifthTUFiveMNotif = timersArray[5] - 300.0
+                print(xmlinfo.FifthTUFiveMNotif)
                 xmlinfo.SixthTUFiveMNotif = timersArray[6] - 300.0
+                print(xmlinfo.SixthTUFiveMNotif)
                 xmlinfo.SeventhTUFiveMNotif = timersArray[7] - 300.0
+                print(xmlinfo.SeventhTUFiveMNotif)
                 xmlinfo.EigthTUFiveMNotif = timersArray[8] - 300.0
+                print(xmlinfo.EigthTUFiveMNotif)
                 xmlinfo.NinthTUFiveMNotif = timersArray[9] - 300.0
+                print(xmlinfo.NinthTUFiveMNotif)
+                
                 
                 if timersArray[0] >= 0.0 {
                     if timersArray[0] <= 300.0 {
@@ -372,7 +423,7 @@ struct Cont_Previews: PreviewProvider {
 struct Content: View {
     @ObservedObject var xmlinfo = XMLInfo()
     var body: some View {
-        PeriodUntilTextFinished(xmlinfo: xmlinfo)
+        PeriodUntilTextFinished(xmlinfo: xmlinfo, onScreen: true)
         
     }
  }

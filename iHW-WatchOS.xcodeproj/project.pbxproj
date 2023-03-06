@@ -22,7 +22,6 @@
 		F7923AD329650D2900DC9678 /* iHW_WatchOS_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7923AD229650D2900DC9678 /* iHW_WatchOS_Watch_AppUITests.swift */; };
 		F7923AD529650D2900DC9678 /* iHW_WatchOS_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7923AD429650D2900DC9678 /* iHW_WatchOS_Watch_AppUITestsLaunchTests.swift */; };
 		F7A07B51297099D0005B0422 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F7A07B50297099D0005B0422 /* Alamofire */; };
-		F7B31B4829A5A140003E4D26 /* IsWeekend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B31B4729A5A140003E4D26 /* IsWeekend.swift */; };
 		F7BAC19A296632E60087CE2D /* Sign_In.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BAC199296632E60087CE2D /* Sign_In.swift */; };
 		F7BAC19C296686D60087CE2D /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BAC19B296686D60087CE2D /* About.swift */; };
 		F7EC650229886FD100873B4D /* CustomStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EC650129886FD100873B4D /* CustomStepper.swift */; };
@@ -83,7 +82,6 @@
 		F7923ACE29650D2900DC9678 /* iHW-WatchOS Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iHW-WatchOS Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7923AD229650D2900DC9678 /* iHW_WatchOS_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iHW_WatchOS_Watch_AppUITests.swift; sourceTree = "<group>"; };
 		F7923AD429650D2900DC9678 /* iHW_WatchOS_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iHW_WatchOS_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		F7B31B4729A5A140003E4D26 /* IsWeekend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsWeekend.swift; sourceTree = "<group>"; };
 		F7BAC199296632E60087CE2D /* Sign_In.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sign_In.swift; sourceTree = "<group>"; };
 		F7BAC19B296686D60087CE2D /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		F7EC650129886FD100873B4D /* CustomStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepper.swift; sourceTree = "<group>"; };
@@ -150,7 +148,6 @@
 				F755B3DC298E30760064431B /* MSMath_Comp.swift */,
 				F7EC650129886FD100873B4D /* CustomStepper.swift */,
 				F77B5359296B739D007358D8 /* UpperSchoolSchedule.swift */,
-				F7B31B4729A5A140003E4D26 /* IsWeekend.swift */,
 				F7923ABB29650D2900DC9678 /* Assets.xcassets */,
 				F7923ABD29650D2900DC9678 /* Preview Content */,
 			);
@@ -353,7 +350,6 @@
 				F7923ABA29650D2800DC9678 /* Homepage.swift in Sources */,
 				F7BAC19C296686D60087CE2D /* About.swift in Sources */,
 				F77B535A296B739D007358D8 /* UpperSchoolSchedule.swift in Sources */,
-				F7B31B4829A5A140003E4D26 /* IsWeekend.swift in Sources */,
 				F7EC650229886FD100873B4D /* CustomStepper.swift in Sources */,
 				F77B535C296B73B6007358D8 /* MiddleSchoolSchedule.swift in Sources */,
 				F77B5358296B5B32007358D8 /* USMSSelect.swift in Sources */,

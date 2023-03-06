@@ -38,48 +38,29 @@ struct HomeGrownButton: ButtonStyle {
 
 
 struct Homepage: View {
-    @State private var isSideBarOpened = false
-
 
     var body: some View {
         
         NavigationView {
 
             ZStack {
-//                SideMenu(isSidebarVisible: $isSideBarOpened)
-//                Button {
-//                    print("clicked :(:")
-//                }   label: {
-//                    Image(systemName: "ellipsis")
-//
-//                }
-//                .position(x: SGConvenience.deviceWidth * 0.1, y: SGConvenience.deviceWidth * 0.1)
-                
-                
-                
-
                     VStack(spacing: 30) {
                         NavigationLink(destination: Sign_In()) {
                             Text("Sign In")
                         }
                         .buttonStyle(HomeGrownButton())
-
+                        
                         NavigationLink(destination: About()) {
                             Text("About")
                         }
                         .buttonStyle(HomeGrownButton())
-                        
-                        
                     }
-                    
-                    
-                    
-                
             }
             .onAppear {
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { success, error in
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { success, error in
                     if success {
                         print("Permission granted")
+                        
                     } else if let error = error {
                         print(error.localizedDescription)
                     }
