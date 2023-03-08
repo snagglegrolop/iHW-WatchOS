@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F71BC90F296D21A0009E01A2 /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = F71BC90E296D21A0009E01A2 /* SWXMLHash */; };
+		F72F79CF29B8441600506D12 /* XML_Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72F79CE29B8441600506D12 /* XML_Classes.swift */; };
 		F755B3DD298E30760064431B /* MSMath_Comp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F755B3DC298E30760064431B /* MSMath_Comp.swift */; };
 		F774787E29ADF1BA004461F7 /* CacheBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F774787D29ADF1BA004461F7 /* CacheBar.swift */; };
 		F77B5358296B5B32007358D8 /* USMSSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B5357296B5B32007358D8 /* USMSSelect.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F72F79CE29B8441600506D12 /* XML_Classes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XML_Classes.swift; sourceTree = "<group>"; };
 		F755B3DC298E30760064431B /* MSMath_Comp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSMath_Comp.swift; sourceTree = "<group>"; };
 		F774787D29ADF1BA004461F7 /* CacheBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheBar.swift; sourceTree = "<group>"; };
 		F77B5357296B5B32007358D8 /* USMSSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USMSSelect.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				F7BAC199296632E60087CE2D /* Sign_In.swift */,
 				F77B5357296B5B32007358D8 /* USMSSelect.swift */,
 				F77B535B296B73B6007358D8 /* MiddleSchoolSchedule.swift */,
+				F72F79CE29B8441600506D12 /* XML_Classes.swift */,
 				F755B3DC298E30760064431B /* MSMath_Comp.swift */,
 				F7EC650129886FD100873B4D /* CustomStepper.swift */,
 				F77B5359296B739D007358D8 /* UpperSchoolSchedule.swift */,
@@ -345,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72F79CF29B8441600506D12 /* XML_Classes.swift in Sources */,
 				F755B3DD298E30760064431B /* MSMath_Comp.swift in Sources */,
 				F7BAC19A296632E60087CE2D /* Sign_In.swift in Sources */,
 				F7923ABA29650D2800DC9678 /* Homepage.swift in Sources */,

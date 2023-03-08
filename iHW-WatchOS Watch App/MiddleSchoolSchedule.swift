@@ -133,10 +133,12 @@ struct MiddleSchoolSchedule: View {
                                             .font(.system(size: 15))
                                             .multilineTextAlignment(.center)
                                             .ignoresSafeArea()
+                                            .padding(.top, 2)
                                         Spacer()
                                             .frame(height: 17)
                                         Divider().frame(width: RelativeWidth(CurrentWidth: 120))
-                                            
+                                            .padding(.trailing, 10)
+                                            .padding(.leading, 10)
                                         
                                         
                                         if xmlinfo.MScounter == 0 && !xmlinfo.SchoolDidEndVar {
@@ -144,6 +146,7 @@ struct MiddleSchoolSchedule: View {
 
                                         } else if xmlinfo.MScounter == 0 {
                                             PeriodUntilTextFinished(xmlinfo: xmlinfo, onScreen: true)
+                                                .padding(.top, -7)
 
                                         }
                                         
@@ -163,77 +166,77 @@ struct MiddleSchoolSchedule: View {
 //                                            .font(.footnote)
 //                                    }
 //                                }
-                                Button {
-                                    Per1_MS = true
-                                } label: {
-                                    Text("Period 1")
-                                    Text("\(xmlinfo.Per1_StartTime) to \(xmlinfo.Per1_EndTime)")
-                                        .font(.footnote)
-                                }
+Button {
+    Per1_MS = true
+} label: {
+    Text("Period 1")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per1"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per1"] ?? "")")
+        .font(.footnote)
+}
 //                                }
-                                Button {
-                                    Per2_MS = true
-                                } label: {
-                                    Text("Period 2")
-                                    Text("\(xmlinfo.Per2_StartTime) to \(xmlinfo.Per2_EndTime)")
-                                        .font(.footnote)
-                                }
-                                Button {
-                                    Break_MS = true
-                                } label: {
-                                    Text("Break")
-                                    Text("\(xmlinfo.Break_StartTime) to \(xmlinfo.Break_EndTime)")
-                                        .font(.footnote)
-                                }
-                                Button {
-                                    Per3_MS = true
-                                } label: {
-                                    Text("Period 3")
-                                    Text("\(xmlinfo.Per3_StartTime) to \(xmlinfo.Per3_EndTime)")
-                                        .font(.footnote)
-                                }
-                                Button {
-                                    Per4_MS = true
-                                } label: {
-                                    Text("Period 4")
-                                    Text("\(xmlinfo.Per4_StartTime) to \(xmlinfo.Per4_EndTime)")
-                                        .font(.footnote)
-                                }
-                                Button {
-                                    Per5_MS = true
-                                } label: {
-                                    Text("Period 5")
-                                    Text("\(xmlinfo.Per5_StartTime) to \(xmlinfo.Per5_EndTime)")
-                                        .font(.footnote)
-                                }
-                                Button {
-                                    Per6_MS = true
-                                } label: {
-                                    Text("Period 6")
-                                    Text("\(xmlinfo.Per6_StartTime) to \(xmlinfo.Per6_EndTime)")
-                                        .font(.footnote)
-                                }
-                                Button {
-                                    Per7_MS = true
-                                } label: {
-                                    Text("Period 7")
-                                    Text("\(xmlinfo.Per7_StartTime) to \(xmlinfo.Per7_EndTime)")
-                                        .font(.footnote)
-                                }
-                                Button {
-                                    Per8_MS = true
-                                } label: {
-                                    Text("Period 8")
-                                    Text("\(xmlinfo.Per8_StartTime) to \(xmlinfo.Per8_EndTime)")
-                                        .font(.footnote)
-                                }
-                                Button {
-                                    Per9_MS = true
-                                } label: {
-                                    Text("Period 9")
-                                    Text("\(xmlinfo.Per9_StartTime) to \(xmlinfo.Per9_EndTime)")
-                                        .font(.footnote)
-                                }
+Button {
+    Per2_MS = true
+} label: {
+    Text("Period 2")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per2"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per2"] ?? "")")
+        .font(.footnote)
+}
+Button {
+    Break_MS = true
+} label: {
+    Text("Break")
+    Text("\(xmlinfo.StartTimeShort_Dict["Break"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Break"] ?? "")")
+        .font(.footnote)
+}
+Button {
+    Per3_MS = true
+} label: {
+    Text("Period 3")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per3"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per3"] ?? "")")
+        .font(.footnote)
+}
+Button {
+    Per4_MS = true
+} label: {
+    Text("Period 4")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per4"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per4"] ?? "")")
+        .font(.footnote)
+}
+Button {
+    Per5_MS = true
+} label: {
+    Text("Period 5")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per5"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per5"] ?? "")")
+        .font(.footnote)
+}
+Button {
+    Per6_MS = true
+} label: {
+    Text("Period 6")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per6"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per6"] ?? "")")
+        .font(.footnote)
+}
+Button {
+    Per7_MS = true
+} label: {
+    Text("Period 7")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per7"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per7"] ?? "")")
+        .font(.footnote)
+}
+Button {
+    Per8_MS = true
+} label: {
+    Text("Period 8")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per8"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per8"] ?? "")")
+        .font(.footnote)
+}
+Button {
+    Per9_MS = true
+} label: {
+    Text("Period 9")
+    Text("\(xmlinfo.StartTimeShort_Dict["Per9"] ?? "") to \(xmlinfo.EndTimeShort_Dict["Per9"] ?? "")")
+        .font(.footnote)
+}
                             }
                             
                         }

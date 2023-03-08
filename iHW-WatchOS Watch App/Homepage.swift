@@ -65,6 +65,7 @@ struct Homepage: View {
                         print(error.localizedDescription)
                     }
                 }
+                URLCache.shared.removeAllCachedResponses()
   
             }
             
