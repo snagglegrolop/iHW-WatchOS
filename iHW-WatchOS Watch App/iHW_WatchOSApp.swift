@@ -11,19 +11,19 @@ import SwiftUI
 
 
 @main struct iHW_WatchOS_Watch_AppApp: App {
-    
     var body: some Scene {
         WindowGroup {
-            Homepage()
+            Homepage(usinfo: USINfo())
+                
+            
         }
     }
 }
-    
-    
+
 
 
 struct iHW_WatchOSApp_Previews: PreviewProvider {
         static var previews: some View {
-            Homepage()
+            Homepage(usinfo: USINfo())
         }
     }

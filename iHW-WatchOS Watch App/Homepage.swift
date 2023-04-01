@@ -10,6 +10,7 @@ import UserNotifications
 import Alamofire
 import Foundation
 
+
 func RelativeWidth(CurrentWidth: CGFloat) -> CGFloat {
     
     let stepone = SGConvenience.deviceWidth / CurrentWidth
@@ -38,7 +39,9 @@ struct HomeGrownButton: ButtonStyle {
 
 
 struct Homepage: View {
+    @State private var isSideBarOpened = false
 
+    @ObservedObject var usinfo: USINfo
     var body: some View {
         
         NavigationView {
@@ -49,23 +52,41 @@ struct Homepage: View {
                             Text("Sign In")
                         }
                         .buttonStyle(HomeGrownButton())
-                        
+
                         NavigationLink(destination: About()) {
                             Text("About")
                         }
                         .buttonStyle(HomeGrownButton())
+                        
+                        
                     }
+                    
+                    
+                    
+                
             }
             .onAppear {
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { success, error in
-                    if success {
-                        print("Permission granted")
-                        
-                    } else if let error = error {
-                        print(error.localizedDescription)
-                    }
-                }
                 URLCache.shared.removeAllCachedResponses()
+
+                NotificationManager.instance.requestAuth()
+                
+                print(#line)
+                usinfo.USgetInfo(futuredays: 0) { success, error in
+                    print(#line)
+                    if let error = error {
+                        print("Error: \(error.localizedDescription)")
+                        return
+                    }
+                    print(#line)
+                    if success {
+                        // Do something with the parsed XML data
+                        print("XML data parsed successfully!")
+                    } else {
+                        print("Failed to parse XML data.")
+                    }
+                    print(#line)
+                }
+                
   
             }
             
@@ -81,7 +102,7 @@ struct Homepage: View {
 
 struct Homepage_Previews: PreviewProvider {
         static var previews: some View {
-            Homepage()
+            Homepage(usinfo: USINfo())
         }
     }
 

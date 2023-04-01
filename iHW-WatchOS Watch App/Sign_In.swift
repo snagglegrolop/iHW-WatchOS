@@ -15,6 +15,7 @@ extension Color {
 }
 
 
+
 class SecurityManager: ObservableObject {
     @Published var isSignInButtonDisabled = true
 }
