@@ -9,21 +9,21 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>0</integer>
 		</dict>
 		<key>SWXMLHashPlayground (Playground) 2.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>3</integer>
 		</dict>
 		<key>SWXMLHashPlayground (Playground).xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<key>SwiftyXMLParser (Playground) 1.xcscheme</key>
 		<dict>
@@ -49,7 +49,30 @@
 		<key>iHW-WatchOS Watch App.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>F7923AAB29650D2800DC9678</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F7923AB129650D2800DC9678</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F7923AC329650D2900DC9678</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F7923ACD29650D2900DC9678</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
